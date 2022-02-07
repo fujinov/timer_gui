@@ -1,4 +1,5 @@
 import pathlib
+import time
 
 import PySimpleGUI as sg
 
@@ -27,4 +28,45 @@ def set_time():
     window.close()
     return user
 
-set_time()
+def main():
+    started = False
+    if path.exists():
+        with open(path) as f:
+            user_m, user_s = map(int, f.read().split())
+    else:
+        user_m, user_s = (3, 0)
+    
+    current_m, current_s = user_m, user_s
+
+    layout = [[sg.T(f'{current_m} : {current_s}', pad=(None, 10), font=(None, 35), key='-DISPLAY-')],
+              [sg.VPush()],
+              [sg.B('Start'), sg.B('Stop'), sg.B('Reset')],
+              [sg.B('Set'), sg.Quit()]]
+    
+    window = sg.Window('タイマー', layout, size=(280, 150), element_justification='center')
+    
+    def update_display():
+        window['-DISPLAY-'].update(f'{current_m} : {current_s}')
+
+    while True:
+        event, _ = window.read(timeout=10)
+        if event == sg.WIN_CLOSED or event == 'Quit':
+            break
+        elif event == 'Start':
+            if started == False:
+                started = True
+                end_time = time.time() + current_m*60 + current_s
+        elif event == 'Stop':
+            started = False
+        elif event == 'Reset':
+            started = False
+        elif event == 'Set':
+            started = False
+
+        if started:
+            remaining_time = end_time - time.time()
+            current_m, current_s = map(int, divmod(remaining_time, 60))
+            update_display()
+    window.close()
+    
+main()
