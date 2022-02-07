@@ -34,7 +34,7 @@ def main():
         with open(path) as f:
             user_m, user_s = map(int, f.read().split())
     else:
-        user_m, user_s = (3, 0)
+        user_m, user_s = (0, 0)
     
     current_m, current_s = user_m, user_s
 
@@ -60,13 +60,19 @@ def main():
             started = False
         elif event == 'Reset':
             started = False
+            current_m, current_s = user_m, user_s
+            update_display()
         elif event == 'Set':
             started = False
+            user_m, user_s = set_time()
+            current_m, current_s = user_m, user_s
+            update_display()
 
         if started:
             remaining_time = end_time - time.time()
             current_m, current_s = map(int, divmod(remaining_time, 60))
             update_display()
     window.close()
-    
-main()
+
+if __name__ == '__main__':    
+    main()
