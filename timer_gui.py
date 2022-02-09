@@ -31,7 +31,7 @@ def set_time():
 def main():
     started = False
     if path.exists():
-        with open(path) as f:
+        with open(path, encoding='utf-8') as f:
             user_min, user_sec = map(int, f.read().split())
     else:
         user_min, user_sec = (0, 0)
