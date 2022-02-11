@@ -20,3 +20,7 @@ PowerShellやターミナルなどから「timer_gui.py」をPythonで実行し�
 次回以降セットの必要がなくなります。
 
 ![タイマー外観](timer-appearance.jpg)
+
+時間が来たらポップアップがお知らせします。
+
+![ポップアップ](timer-popup.jpg)
