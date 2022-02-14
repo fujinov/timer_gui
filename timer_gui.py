@@ -46,7 +46,7 @@ def main():
     window = sg.Window('タイマー', layout, size=(280, 150), element_justification='center')
     
     def update_display():
-        window['-DISPLAY-'].update(f'{current_min} : {current_sec}')
+        window['-DISPLAY-'].update(f'{int(current_min)} : {int(current_sec)}')
 
     while True:
         event, _ = window.read(timeout=50)
@@ -76,7 +76,7 @@ def main():
                 current_min, current_sec = user_min, user_sec
                 update_display()
             else:
-                current_min, current_sec = map(int, divmod(remaining_time, 60))
+                current_min, current_sec = divmod(remaining_time, 60)
                 update_display()
     window.close()
     
